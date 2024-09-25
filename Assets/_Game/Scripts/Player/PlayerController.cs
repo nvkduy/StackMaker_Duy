@@ -1,57 +1,60 @@
 ﻿using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Windows;
+using static MiniGestureRecognizer;
+using static UnityEngine.GraphicsBuffer;
 public class PlayerController : MonoBehaviour
 {
 
     [SerializeField] float moveSpeed = 5f;
-    [SerializeField] private LayerMask BrickLayer;
-    private Vector3 target;
+    [SerializeField] private LayerMask brickLayer;
+
+   
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        GetTargetPos();
-    }
-    private void OnEnable()
-    {
-        MiniGestureRecognizer.Swipe += HandleSwipe;
+        Vector3 enPos = GetTargetPos();
+        ;
     }
 
-    private void OnDisable()
+    private Vector3 GetTargetPos()
     {
-        MiniGestureRecognizer.Swipe -= HandleSwipe;
-    }
-
-    private void GetTargetPos()
-    {
-       
+        Vector3 target = transform.position;
         RaycastHit hit;
-        Debug.DrawLine(transform.position + Vector3.up * 2f,Vector3.down * 2f, Color.red);
-        if (Physics.Raycast(transform.position + Vector3.up * 2f, Vector3.down, out hit, 2f, BrickLayer))
-        {
-            target = hit.point;
-        }
+        //for (int i = 0; i < 20; i++)
+        //{ 
+            Debug.DrawLine(transform.position + transform.forward * 2f + transform.up * 2f, transform.position + transform.forward * 2f + Vector3.down * 3f, Color.red, 1f);
+            if (Physics.Raycast(transform.position + transform.forward * 2f + transform.up * 2f, transform.position + transform.forward * 2f + Vector3.down * 3f, out hit, brickLayer))
+            {
+                target = hit.point;
+            }
+            
+        //}
+        return target;
     }
-    private void HandleSwipe(MiniGestureRecognizer.SwipeDirection direction)
+
+    void Move(SwipeDirection dir, Vector3 endPos)
     {
+        Vector3 movementDirection = Vector3.zero;
 
-        switch (direction)
+        switch (dir)
         {
-            case MiniGestureRecognizer.SwipeDirection.Up:
-                target = transform.position + Vector3.forward;
+            case SwipeDirection.Up:
+                movementDirection = transform.position + Vector3.forward; 
                 break;
-            case MiniGestureRecognizer.SwipeDirection.Down:
-                target = transform.position + Vector3.back;
+            case SwipeDirection.Down:
+                movementDirection = transform.position + Vector3.back; 
                 break;
-            case MiniGestureRecognizer.SwipeDirection.Right:
-                target = transform.position + Vector3.right;
+            case SwipeDirection.Left:
+                movementDirection = transform.position + Vector3.left; 
                 break;
-            case MiniGestureRecognizer.SwipeDirection.Left:
-                target = transform.position + Vector3.left;
+            case SwipeDirection.Right:
+                movementDirection = transform.position + Vector3.right;
                 break;
         }
+        transform.position = Vector3.MoveTowards(transform.position, movementDirection, moveSpeed);
 
-
-
-    }
+       
+}
 }
