@@ -6,28 +6,34 @@ using static MiniGestureRecognizer;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private LayerMask brickLayer;
+    [SerializeField] private GameObject brickPrefab;
+    [SerializeField] private float hightBrick;
+    [SerializeField] private GameObject playerRender;
+    [SerializeField] private GameObject brickLine;
+    [SerializeField] private Transform brickList;
 
-    private bool isMove;
+    private bool isMoving = false;
     private Vector3 moveDir = Vector3.forward;
-
+    private Vector3 targetPos;
+    List<GameObject> playerBricks;
+    private void Start()
+    {
+        playerBricks = new List<GameObject>();
+        targetPos = transform.position;
+        
+    }
     private void Update()
     {
-        Vector3 targetPos = GetTargetPos();
+       if (Vector3.Distance(transform.position, targetPos) < 0.01f)
+        {
+          isMoving = false;         
+          return;
+        }
 
-        
-            
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed );
-            Debug.Log("Moving to: " + targetPos);
-            Debug.Log($"Current position: {transform.position}");
-            
-            if (Vector3.Distance(transform.position, targetPos) < 0.01f)
-            {
-                isMove = false; 
-                Debug.Log("Reached target position");
-            }
-        
+       isMoving = true;
+       transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);        
     }
 
     private void OnEnable()
@@ -40,37 +46,35 @@ public class Player : MonoBehaviour
         MiniGestureRecognizer.Swipe -= Move; 
     }
 
-    private Vector3 GetTargetPos()
+    private void FindTargetPos(Vector3 direction)
     {
-        Vector3 lastPos = transform.position;
         RaycastHit hit;
         Vector3 rayStart;
         Vector3 rayDir;
-      
-        for (int i = 0; i < 10; i++)
-        {
-            rayStart = transform.position + (moveDir*i)*1f + transform.up * 2f;
-            rayDir = transform.position + (moveDir*i)*1f + Vector3.down * 2f;
             
+        for (int i = 1; i <= 40; i++)
+        {
+            rayStart = transform.position + (direction * i) + Vector3.up*0.5f;
+            rayDir = Vector3.down;
+            Debug.DrawRay(rayStart, rayDir, Color.red, 1f);
             if (Physics.Raycast(rayStart, rayDir, out hit,brickLayer))
             {
-                Debug.DrawLine(rayStart, rayDir, Color.red, 1f);
-                lastPos = hit.point;
-                Debug.Log("a" + lastPos);
-                break;
-                
+                targetPos = hit.collider.transform.position; /// lay tam cua thang va cham
+
+                targetPos.y = transform.position.y; // position y cua target luon bang player
+                                          
+            }
+            else
+            {
+                return;
             }
         }
-        
-       
-        return lastPos;
-           
     }
 
     private void Move(SwipeDirection dir)
     {
-        Debug.Log("direciton " + dir);
        
+            if (isMoving) return;
             switch (dir)
             {
                 case SwipeDirection.Up:
@@ -89,7 +93,62 @@ public class Player : MonoBehaviour
                     moveDir = Vector3.right;
                     transform.rotation = Quaternion.Euler(new Vector3(0, -90, 0));
                     break;
-           
-        }
+
+            }
+            FindTargetPos(moveDir);
+                    
     }
+
+    private void AddBrick(GameObject brick)
+    {
+       
+        brick = Instantiate(brickPrefab, brickList);
+        playerBricks.Add(brick);
+        playerRender.transform.position = new Vector3(transform.position.x, transform.position.y  + hightBrick, transform.position.z);
+        brick.transform.position = new Vector3(transform.position.x, transform.position.y -.25f + hightBrick, transform.position.z);
+        brick.transform.rotation = Quaternion.Euler(270,0,0);
+        hightBrick += 0.25f;
+        
+        
+    }
+
+    private void RemoveBrick(GameObject brick)
+    {     
+      
+        if (playerBricks.Contains(brick)) 
+        {
+            playerBricks.Remove(brick);         
+        }
+        //playerRender.transform.position = new Vector3(transform.position.x, transform.position.y - hightBrick, transform.position.z);
+        //brick.transform.position = new Vector3(transform.position.x, transform.position.y - .25f - hightBrick, transform.position.z);
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("brickGround"))
+        {
+            Destroy(collider.gameObject);
+            AddBrick(brickPrefab); 
+            
+        }
+        else if (collider.gameObject.CompareTag("removeBrick"))
+        {
+            if (playerBricks.Count > 0)
+            {
+                GameObject brickToRemove = playerBricks[playerBricks.Count - 1];
+                Debug.Log("Bricks before removal: " + playerBricks.Count);
+                RemoveBrick(brickToRemove);
+                Destroy(brickToRemove);
+                Debug.Log("Bricks after removal: " + playerBricks.Count);
+
+            }
+        }
+
+
+    
+    }
+
+
+     
+    
 }
