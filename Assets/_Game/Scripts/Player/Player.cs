@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject brickPrefab;
     [SerializeField] private float hightBrick;
     [SerializeField] private GameObject playerRender;
-    [SerializeField] private GameObject brickLine;
+    
     [SerializeField] private Transform brickList;
 
     private bool isMoving = false;
@@ -115,9 +115,11 @@ public class Player : MonoBehaviour
     private void RemoveBrick(GameObject brick)
     {     
       
-        if (playerBricks.Contains(brick)) 
+        if (playerBricks.Count >0) 
         {
-            playerBricks.Remove(brick);         
+            playerBricks.Remove(brick);
+            playerRender.transform.position -= Vector3.up * 0.25f;
+            hightBrick -= 0.25f;
         }
         //playerRender.transform.position = new Vector3(transform.position.x, transform.position.y - hightBrick, transform.position.z);
         //brick.transform.position = new Vector3(transform.position.x, transform.position.y - .25f - hightBrick, transform.position.z);
@@ -136,10 +138,10 @@ public class Player : MonoBehaviour
             if (playerBricks.Count > 0)
             {
                 GameObject brickToRemove = playerBricks[playerBricks.Count - 1];
-                Debug.Log("Bricks before removal: " + playerBricks.Count);
+                //Debug.Log("Bricks before removal: " + playerBricks.Count);
                 RemoveBrick(brickToRemove);
                 Destroy(brickToRemove);
-                Debug.Log("Bricks after removal: " + playerBricks.Count);
+                //Debug.Log("Bricks after removal: " + playerBricks.Count);
 
             }
         }
