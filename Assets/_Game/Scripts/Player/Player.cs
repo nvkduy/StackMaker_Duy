@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject brickPrefab;
     [SerializeField] private float hightBrick;
     [SerializeField] private GameObject playerRender;
-    
     [SerializeField] private Transform brickList;
 
     private bool isMoving = false;
@@ -22,7 +21,7 @@ public class Player : MonoBehaviour
     {
         playerBricks = new List<GameObject>();
         targetPos = transform.position;
-        
+        FindAnyObjectByType<CameraFollow>().Target = playerRender.transform;
     }
     private void Update()
     {
@@ -125,6 +124,17 @@ public class Player : MonoBehaviour
         //brick.transform.position = new Vector3(transform.position.x, transform.position.y - .25f - hightBrick, transform.position.z);
     }
 
+    private void ClearBrick()
+    {
+
+        foreach (GameObject brick in playerBricks)
+        {
+            Destroy(brick);
+        }
+        playerBricks.Clear();
+
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.CompareTag("brickGround"))
@@ -138,12 +148,23 @@ public class Player : MonoBehaviour
             if (playerBricks.Count > 0)
             {
                 GameObject brickToRemove = playerBricks[playerBricks.Count - 1];
-                //Debug.Log("Bricks before removal: " + playerBricks.Count);
+                Debug.Log("Bricks before removal: " + playerBricks.Count);
                 RemoveBrick(brickToRemove);
                 Destroy(brickToRemove);
-                //Debug.Log("Bricks after removal: " + playerBricks.Count);
-
+                Debug.Log("Bricks after removal: " + playerBricks.Count);
             }
+
+           
+        }
+        else if (collider.gameObject.CompareTag("Finish"))
+        {
+            if (playerBricks.Count > 0)
+            {
+                
+                ClearBrick();
+                
+            }
+           playerRender.transform.localPosition = Vector3.zero;
         }
 
 

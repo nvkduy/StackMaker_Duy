@@ -7042,7 +7042,7 @@ GameObject:
   - component: {fileID: 4908174672902853}
   - component: {fileID: 33307176621398018}
   - component: {fileID: 23567718795477389}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: di (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7631,7 +7631,7 @@ Transform:
   m_GameObject: {fileID: 1191469147039628}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalPosition: {x: 0, y: -0, z: 3.02}
   m_LocalScale: {x: 1, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11017,7 +11017,7 @@ GameObject:
   - component: {fileID: 4771742858000308}
   - component: {fileID: 33799921150653981}
   - component: {fileID: 23784226222503477}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: di (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22529,6 +22529,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4157892317022374}
+  - component: {fileID: 7043164652081621481}
+  - component: {fileID: 6356286782446321127}
   m_Layer: 0
   m_Name: winpos
   m_TagString: Untagged
@@ -22618,6 +22620,41 @@ Transform:
   - {fileID: 4127882339869582}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &7043164652081621481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377060364527856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2fabda38757424baa189130e0769e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openChest: {fileID: 1502762753808250}
+  closeChest: {fileID: 1095323009806971}
+--- !u!65 &6356286782446321127
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377060364527856}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1382597685722805
 GameObject:
   m_ObjectHideFlags: 0
@@ -26392,7 +26429,7 @@ GameObject:
   - component: {fileID: 23514134823232109}
   m_Layer: 0
   m_Name: baoxiang_open
-  m_TagString: Untagged
+  m_TagString: openChest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29551,9 +29588,9 @@ GameObject:
   - component: {fileID: 4902209916179187}
   - component: {fileID: 33082754106593514}
   - component: {fileID: 23513141896460911}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: zhongdian
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32408,7 +32445,7 @@ GameObject:
   - component: {fileID: 4100889143774917}
   - component: {fileID: 33213648475005078}
   - component: {fileID: 23758723246471295}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: di (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40252,7 +40289,7 @@ GameObject:
   - component: {fileID: 4575517097557370}
   - component: {fileID: 198425593318042275}
   - component: {fileID: 199674623212508634}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Par1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42798,7 +42835,6 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c1e9e5a7d21bf8b4d949d5f9b970fdbb, type: 2}
   - {fileID: 2100000, guid: c1e9e5a7d21bf8b4d949d5f9b970fdbb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -48802,7 +48838,7 @@ GameObject:
   - component: {fileID: 33770471920486878}
   - component: {fileID: 23003358548213330}
   - component: {fileID: 9141395339292408206}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: qidian
   m_TagString: Finish
   m_Icon: {fileID: 0}

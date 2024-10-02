@@ -4,25 +4,15 @@ using UnityEngine;
 
 public class ActivateBrick2 : MonoBehaviour
 {
-    public GameObject[] brickArray;
-    private int curentIndex = 0;
-
-    private void Start()
-    {
-        //GameObject[] brickArray = Resources.LoadAll<GameObject>("Bricks");
-        //brickArray = GameObject.FindGameObjectsWithTag("brickDeActive");
-    }
+    [SerializeField] private GameObject activeBrick;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("removeBrick"))
+        if (other.CompareTag("Player"))
         {
-           if (curentIndex < brickArray.Length)
-            {
-                brickArray[curentIndex].SetActive(true);
-                curentIndex++;
-            }
-
-            other.gameObject.tag = "Untagged";
+           activeBrick.SetActive(true);
+      
         }
+
+        gameObject.tag = ("Untagged");
     }  
 }
