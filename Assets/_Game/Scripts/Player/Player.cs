@@ -6,21 +6,26 @@ using static MiniGestureRecognizer;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private LayerMask brickLayer;
-    [SerializeField] private GameObject brickPrefab;
     [SerializeField] private float hightBrick;
+    [SerializeField] private float moveSpeed = 5f;
+
+    [SerializeField] private LayerMask brickLayer;
+
+    [SerializeField] private GameObject brickPrefab;  
     [SerializeField] private GameObject playerRender;
+
     [SerializeField] private Transform brickList;
 
     private bool isMoving = false;
+
     private Vector3 moveDir = Vector3.forward;
     private Vector3 targetPos;
+
     List<GameObject> playerBricks;
     private void Start()
     {
         playerBricks = new List<GameObject>();
-        targetPos = transform.position;
+        targetPos = transform.position; 
         FindAnyObjectByType<CameraFollow>().Target = playerRender.transform;
     }
     private void Update()
