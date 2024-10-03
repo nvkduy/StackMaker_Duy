@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     private Vector3 moveDir = Vector3.forward;
     private Vector3 targetPos;
 
+    int score = 0;  
     List<GameObject> playerBricks;
     private void Start()
     {
@@ -164,10 +165,10 @@ public class Player : MonoBehaviour
         else if (collider.gameObject.CompareTag("Finish"))
         {
             if (playerBricks.Count > 0)
-            {
-                
+            {               
                 ClearBrick();
-                
+                //UIManager.Instance.CloseAll();
+                //UIManager.Instance.OpenUI<CanvasVictory>().SetBestScore(score);
             }
            playerRender.transform.localPosition = Vector3.zero;
         }
