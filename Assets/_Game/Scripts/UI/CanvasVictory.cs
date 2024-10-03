@@ -14,7 +14,8 @@ public class CanvasVictory : UICanvas
     public void MainMenuButton()
     {
         UIManager.Instance.CloseAll();
-        UIManager.Instance.OpenUI<CanvasMainMenu>();    
+        UIManager.Instance.OpenUI<CanvasMainMenu>();   
+        GameStateManager.Instance.ChangeState(GameState.mainMenu);
     }
 
     public void NextLevelButton()

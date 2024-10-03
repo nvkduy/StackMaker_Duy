@@ -16,13 +16,14 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform brickList;
 
-    private bool isMoving = false;
 
+    private bool isMoving = false;
+    private bool isLose =false;
     private Vector3 moveDir = Vector3.forward;
     private Vector3 targetPos;
 
     int score = 0;  
-    List<GameObject> playerBricks;
+    public List<GameObject> playerBricks;
     private void Start()
     {
         playerBricks = new List<GameObject>();
@@ -31,6 +32,11 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        if (isLose)
+        {
+            Debug.Log("islose");
+            return;
+        }
        if (Vector3.Distance(transform.position, targetPos) < 0.01f)
         {
           isMoving = false;         
@@ -53,6 +59,10 @@ public class Player : MonoBehaviour
 
     private void FindTargetPos(Vector3 direction)
     {
+        if(!GameStateManager.Instance.IsGameState(GameState.gamePlay))
+        {
+            return;
+        }
         RaycastHit hit;
         Vector3 rayStart;
         Vector3 rayDir;
@@ -126,6 +136,13 @@ public class Player : MonoBehaviour
             playerRender.transform.position -= Vector3.up * 0.25f;
             hightBrick -= 0.25f;
         }
+        
+        if (playerBricks.Count == 0)
+        {
+            targetPos = transform.position;
+            isLose = true;
+            Debug.Log("emtry brick");
+        }
         //playerRender.transform.position = new Vector3(transform.position.x, transform.position.y - hightBrick, transform.position.z);
         //brick.transform.position = new Vector3(transform.position.x, transform.position.y - .25f - hightBrick, transform.position.z);
     }
@@ -167,8 +184,8 @@ public class Player : MonoBehaviour
             if (playerBricks.Count > 0)
             {               
                 ClearBrick();
-                //UIManager.Instance.CloseAll();
-                //UIManager.Instance.OpenUI<CanvasVictory>().SetBestScore(score);
+                UIManager.Instance.CloseAll();
+                UIManager.Instance.OpenUI<CanvasVictory>().SetBestScore(score);
             }
            playerRender.transform.localPosition = Vector3.zero;
         }
