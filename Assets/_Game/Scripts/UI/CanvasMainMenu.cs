@@ -12,9 +12,15 @@ public class CanvasMainMenu : UICanvas
         GameStateManager.Instance.ChangeState(GameState.gamePlay);
     }
 
+    public void SelectLevel()
+    {
+        GameStateManager.Instance.ChangeState(GameState.selectLevel);
+    }
     public void SettingsButton()
     {
         GameStateManager.Instance.ChangeState(GameState.settings);
         UIManager.Instance.OpenUI<CanvasSettings>().SetState(this);
     }
+
+
 }

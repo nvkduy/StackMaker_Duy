@@ -4,17 +4,19 @@ using UnityEngine;
 
 public enum GameState
 {
-    mainMenu=0,
-    gamePlay=1,
-    settings=2,
-    victory=3,
-    fail=4,
+    mainMenu = 0,
+    gamePlay = 3,
+    selectLevel = 5,
+    settings = 8,
+    victory = 10,
+    fail = 12,
+
 }
 
-public class GameStateManager : Singleton<GameStateManager> 
+public class GameStateManager : Singleton<GameStateManager>
 {
     private GameState curentState;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,8 @@ public class GameStateManager : Singleton<GameStateManager>
         {
             case GameState.gamePlay:
 
+                break;
+            case GameState.selectLevel:
                 break;
             case GameState.settings:
                 break;
