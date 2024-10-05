@@ -13,8 +13,14 @@ public class CanvasFail : UICanvas
     }
     public void MainMenuButton()
     {
-        Close(0);
+        UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<CanvasMainMenu>();
+        GameStateManager.Instance.ChangeState(GameState.fail);
+    }
+    public void RetryButton()
+    {
+        
+        LevelManager.Instance.RetryLevel();
     }
     
 }

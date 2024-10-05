@@ -141,6 +141,7 @@ public class Player : MonoBehaviour
         {
             targetPos = transform.position;
             isLose = true;
+            GameStateManager.Instance.ChangeState(GameState.fail);
             Debug.Log("emtry brick");
         }
         //playerRender.transform.position = new Vector3(transform.position.x, transform.position.y - hightBrick, transform.position.z);
@@ -184,8 +185,7 @@ public class Player : MonoBehaviour
             if (playerBricks.Count > 0)
             {               
                 ClearBrick();
-                UIManager.Instance.CloseAll();
-                UIManager.Instance.OpenUI<CanvasVictory>().SetBestScore(score);
+                
             }
            playerRender.transform.localPosition = Vector3.zero;
         }

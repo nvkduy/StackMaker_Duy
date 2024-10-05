@@ -13,36 +13,44 @@ public enum GameState
 
 public class GameStateManager : Singleton<GameStateManager> 
 {
-    private GameState curentState;
+    private GameState currentState;
     
     // Start is called before the first frame update
     void Start()
     {
-        curentState = GameState.mainMenu;
+        UIManager.Instance.OpenUI<CanvasMainMenu>();
+        currentState = GameState.mainMenu;
     }
 
 
     public void ChangeState(GameState newState)
     {
-        curentState = newState;
+        currentState = newState;
 
         switch (newState)
         {
+            case GameState.mainMenu:
+               
+                break;
             case GameState.gamePlay:
-
+                Time.timeScale = 1;
                 break;
             case GameState.settings:
+                Time.timeScale = 0;
                 break;
             case GameState.victory:
                 break;
-            case GameState.mainMenu:
+            case GameState.fail:
+                UIManager.Instance.OpenUI<CanvasFail>();
+
                 break;
+
         }
     }
 
 
     public bool IsGameState(GameState state)
     {
-        return curentState == state;
+        return currentState == state;
     }
 }
