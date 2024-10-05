@@ -10,13 +10,14 @@ public class LevelManager : Singleton<LevelManager>
     {
         levelPrefabs = Resources.LoadAll<GameObject>(("Level/"));
     }
-    public void NextLevel(int levelIndex)
+    public void LoadLevel(int levelIndex)
     {
         if (levelIndex < 0 || levelIndex >= levelPrefabs.Length)
         {
             return;
         }
         if (currentLevel != null)
+
         {
             Destroy(currentLevel);
         }
@@ -26,9 +27,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void RetryLevel()
     {
-
-        NextLevel(0);
-        Debug.Log("retry");
+   
     }
 
 }

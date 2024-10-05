@@ -10,6 +10,7 @@ public class CanvasMainMenu : UICanvas
         //Instance key để truy cập tới đối tượng duy nhất của lớp UIManager mà không cần phải tạo mới mỗi lần muốn sử dụng.
         UIManager.Instance.OpenUI<CanvasGamePlay>();
         GameStateManager.Instance.ChangeState(GameState.gamePlay);
+        LevelManager.Instance.LoadLevel(0);
     }
 
     public void SettingsButton()

@@ -27,8 +27,9 @@ public class Player : MonoBehaviour
     private void Start()
     {
         playerBricks = new List<GameObject>();
-        targetPos = transform.position; 
+        targetPos = transform.position;
         FindAnyObjectByType<CameraFollow>().Target = playerRender.transform;
+
     }
     private void Update()
     {
