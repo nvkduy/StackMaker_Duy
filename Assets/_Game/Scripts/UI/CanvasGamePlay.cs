@@ -18,6 +18,7 @@ public class CanvasGamePlay : UICanvas
     }
     public void SettingsButton()
     {
+        UICanvas.Instance.Close(0);
         UIManager.Instance.OpenUI<CanvasSettings>().SetState(this);
         GameStateManager.Instance.ChangeState(GameState.settings);
     }

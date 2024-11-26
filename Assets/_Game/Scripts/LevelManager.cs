@@ -1,34 +1,93 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
 {
-    private GameObject[] levelPrefabs;
-    private GameObject currentLevel;
-    private void Awake()
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private Player player;
+    public Action<Transform> PlayerTF;
+    public List<Level> levelPrefab;
+    private Level currentLevel;
+  
+    private int levelIndex;
+
+    public int LevelIndex => levelIndex;
+  
+    private void Start()
     {
-        levelPrefabs = Resources.LoadAll<GameObject>(("Level/"));
+        levelIndex = PlayerPrefs.GetInt("Level", 0);
+        UIManager.Instance.OpenUI<CanvasMainMenu>();
     }
-    public void NextLevel(int levelIndex)
+
+    public void OnInit()
     {
-        if (levelIndex < 0 || levelIndex >= levelPrefabs.Length)
-        {
-            return;
-        }
+
+        Transform spawnPoint = currentLevel.spawnPoint;
+        
+
+        SpawnPlayer(spawnPoint);
+    }
+
+    private void SpawnPlayer(Transform spawnPoint)
+    {
+        GameObject playerObject = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
+        player = playerObject.GetComponent<Player>();
+        PlayerTF?.Invoke(player.transform);
+    }
+    public void OnFinshGame()
+    {
+        OnReset();
+        Destroy(currentLevel.gameObject);
+    }
+
+    public void LoadLevel(int level)
+    {
         if (currentLevel != null)
         {
-            Destroy(currentLevel);
+            Destroy(currentLevel.gameObject);
         }
-
-        currentLevel = Instantiate(levelPrefabs[levelIndex],this.transform);
+        if (level < levelPrefab.Count)
+        {
+            PlayerPrefs.SetInt("Level", level);
+            currentLevel = Instantiate(levelPrefab[level]);
+            if (currentLevel == null)
+            {
+                Debug.LogError("Failed to instantiate the level.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Level index out of range.");
+        }
     }
 
-    public void RetryLevel()
+    public void OnReset()
     {
 
-        NextLevel(0);
-        Debug.Log("retry");
+        Destroy(player.gameObject);
+        Destroy(currentLevel.gameObject);
     }
 
+    internal void NextLevel()
+    {
+        levelIndex = (levelIndex + 1) % levelPrefab.Count;
+        PlayerPrefs.SetInt("Level", levelIndex);
+        OnReset();
+        LoadLevel(levelIndex);
+        OnInit();
+    }
+
+  
+    internal void RetryLevel()
+    {
+        OnReset();
+        LoadLevel(levelIndex);
+        OnInit();
+    }
 }
+
+
+

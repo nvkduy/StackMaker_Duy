@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -13,13 +11,17 @@ public class CanvasVictory : UICanvas
     }
     public void MainMenuButton()
     {
-        UIManager.Instance.CloseAll();
-        UIManager.Instance.OpenUI<CanvasMainMenu>();   
+        Close(0);
+        LevelManager.Instance.OnReset();
+        UIManager.Instance.OpenUI<CanvasMainMenu>();
         GameStateManager.Instance.ChangeState(GameState.mainMenu);
     }
 
     public void NextLevelButton()
     {
-
+        Close(0);
+        UIManager.Instance.OpenUI<CanvasGamePlay>();
+        GameStateManager.Instance.ChangeState(GameState.gamePlay);
+        LevelManager.Instance.NextLevel();
     }
 }

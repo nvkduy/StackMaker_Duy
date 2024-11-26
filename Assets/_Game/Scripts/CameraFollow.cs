@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    private Vector3 offset;
-    [SerializeField] private Transform target;
-    [SerializeField] private float smoothTime;
-    private Vector3 currentVelocity = Vector3.zero;
 
-    private void Awake()
+    [SerializeField] Vector3 offset;
+    [SerializeField] Transform TF;
+
+    private Transform playerTF;
+
+    private void OnEnable()
     {
-        offset = transform.position - target.position;
+        LevelManager.Instance.PlayerTF += SetPlayerTF;
+
     }
+
     private void LateUpdate()
     {
-        Vector3 targetPosition = target.position + offset;
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime);
+        if (playerTF != null)
+        {
+            TF.position = Vector3.Lerp(TF.position, playerTF.position + offset, Time.deltaTime * 5f);
+        }
     }
 
-
-    public Transform Target
+    public void SetPlayerTF(Transform newPlayerTF)
     {
-        get { return target; }
-        set
-        {
-            target = value;
-        }
+        playerTF = newPlayerTF;
     }
 }

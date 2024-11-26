@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
     {
         playerBricks = new List<GameObject>();
         targetPos = transform.position; 
-        FindAnyObjectByType<CameraFollow>().Target = playerRender.transform;
     }
     private void Update()
     {
@@ -141,7 +140,8 @@ public class Player : MonoBehaviour
         {
             targetPos = transform.position;
             isLose = true;
-            GameStateManager.Instance.ChangeState(GameState.fail);
+            UICanvas.Instance.Close(0); 
+            UIManager.Instance.OpenUI<CanvasFail>();
             Debug.Log("emtry brick");
         }
         //playerRender.transform.position = new Vector3(transform.position.x, transform.position.y - hightBrick, transform.position.z);
@@ -187,7 +187,10 @@ public class Player : MonoBehaviour
                 ClearBrick();
                 
             }
-           playerRender.transform.localPosition = Vector3.zero;
+            GameStateManager.Instance.ChangeState(GameState.victory);
+            UICanvas.Instance.Close(0);
+            UIManager.Instance.OpenUI<CanvasVictory>();
+            playerRender.transform.localPosition = Vector3.zero;
         }
 
 

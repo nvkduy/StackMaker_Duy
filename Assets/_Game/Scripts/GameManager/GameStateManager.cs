@@ -41,8 +41,6 @@ public class GameStateManager : Singleton<GameStateManager>
             case GameState.victory:
                 break;
             case GameState.fail:
-                UIManager.Instance.OpenUI<CanvasFail>();
-
                 break;
 
         }

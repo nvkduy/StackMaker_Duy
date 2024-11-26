@@ -39,7 +39,8 @@ public class CanvasSettings : UICanvas
 
     public void MainMenuButton()
     {
-        UIManager.Instance.CloseAll();
+        Close(0);
+        LevelManager.Instance.OnReset();
         UIManager.Instance.OpenUI<CanvasMainMenu>();
         GameStateManager.Instance.ChangeState(GameState.mainMenu);
     }
