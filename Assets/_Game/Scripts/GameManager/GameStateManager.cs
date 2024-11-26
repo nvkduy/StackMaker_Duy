@@ -30,7 +30,7 @@ public class GameStateManager : Singleton<GameStateManager>
         switch (newState)
         {
             case GameState.mainMenu:
-               
+                Time.timeScale = 0;
                 break;
             case GameState.gamePlay:
                 Time.timeScale = 1;
@@ -41,6 +41,7 @@ public class GameStateManager : Singleton<GameStateManager>
             case GameState.victory:
                 break;
             case GameState.fail:
+
                 break;
 
         }

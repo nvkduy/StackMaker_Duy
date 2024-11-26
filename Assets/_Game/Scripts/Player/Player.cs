@@ -27,7 +27,11 @@ public class Player : MonoBehaviour
     private void Start()
     {
         playerBricks = new List<GameObject>();
+
         targetPos = transform.position; 
+
+        targetPos = transform.position;
+
     }
     private void Update()
     {
@@ -144,8 +148,6 @@ public class Player : MonoBehaviour
             UIManager.Instance.OpenUI<CanvasFail>();
             Debug.Log("emtry brick");
         }
-        //playerRender.transform.position = new Vector3(transform.position.x, transform.position.y - hightBrick, transform.position.z);
-        //brick.transform.position = new Vector3(transform.position.x, transform.position.y - .25f - hightBrick, transform.position.z);
     }
 
     private void ClearBrick()

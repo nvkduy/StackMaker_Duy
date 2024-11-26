@@ -22,6 +22,7 @@ public class LevelManager : Singleton<LevelManager>
         UIManager.Instance.OpenUI<CanvasMainMenu>();
     }
 
+
     public void OnInit()
     {
 
@@ -44,8 +45,10 @@ public class LevelManager : Singleton<LevelManager>
     }
 
     public void LoadLevel(int level)
+
     {
         if (currentLevel != null)
+
         {
             Destroy(currentLevel.gameObject);
         }
@@ -69,6 +72,7 @@ public class LevelManager : Singleton<LevelManager>
 
         Destroy(player.gameObject);
         Destroy(currentLevel.gameObject);
+
     }
 
     internal void NextLevel()
